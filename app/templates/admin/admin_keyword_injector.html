@@ -1,0 +1,72 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+<title>Mass Keyword Injector v.1.0.</title>
+{% endblock %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Mass Keyword Injector</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <p>Mass Keyword Injector:</p>
+                            <ol>
+                                <li>Get keywords from onkeywords.com</li>
+                                <li>input into textarea, split line</li>
+                                <li>Jika belum, input ke database pdfterms</li>
+                            </ol>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="form-group col-lg-5">
+                                <label>Enter a Keywords (Line by line:</label>
+                                <textarea id="textareaKeywords" class="form-group col-lg-12" style="height: 200px;"></textarea><br />
+                                <button type="submit" id="buttonInject" class="btn btn-default">Inject!</button><br />
+                            </div>
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+{% endblock %}
+
+    </div>
+    <!-- /#wrapper -->
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+        $("#buttonInject").click(function() {
+            var keywords = $("#textareaKeywords").val();
+            if (keywords !== "") {
+                // post to ajax
+                $.ajax({
+                    url: "/admin/keyword-injector",
+                    type: "POST",
+                    data: {"keywords": keywords},
+                    success: function(response) {
+                        // console.log(response);
+                        window.location.reload();
+                    }
+                })
+            } else { // jika textarea keyword kosong
+                alert("keyword-nya diisi dong mas!");
+            }
+            return false;
+        })
+    })
+</script>
+{% endblock %}

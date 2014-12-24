@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% block title %}Homepage{% endblock %}
+{% block meta %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Homepage | {{ config['SITE_NAME'] }}">
+<meta name="keywords" content="ebooks, pdf, digital book, document share">
+<meta name="author" content="seepdf.com">
+{% endblock %}
+{% block css %}
+<style>
+#added {
+width: 600px;
+padding: 30px;
+display: none;
+z-index: -1;
+background: #FFF;
+border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+-moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="row-fluid">
+<div class="row-fluid">
+<div class="hero-unit">
+<div class="span5 banner"></div>
+<div class="span7">
+<h1 style="font-size: 18px; cursor: pointer;" data-oid="{{ data[0]['_id'] }}" data-title="{{ data[0]['title']|slug }}">{{ data[0]['title']|safe|title }}</h1>
+<p style="padding-bottom: 0;">{{ data[0]['snippet'] }}</p>
+<p style="font-size: 11px;">
+Added: {{ data[0]['added']|humanize }}<br />
+Updated: {{ data[0]['updated'] }}<br />
+Filetype: Portable Document Format (PDF)
+</p>
+<p class="noLink"><a class="btn btn-primary btn-large">
+Download »</a></p>
+</div>
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+<!--end row-->
+<!--start row-->
+<div class="row-fluid">
+<div class="hero-unit smallerTopPadding" style="border-left: 5px solid #f0ad4e;">
+<h3 style="font-size: 11px;">Sponsored Ads</h3>
+<p style="padding-bottom: 0px;"></p>
+</div>
+</div>
+<!--end row-->
+<!--start row-->
+<div class="row-fluid">
+<div class="span8">
+{% for d in data[1:] %}
+<div class="hero-unit smallerTopPadding">
+{% if d['thumb_updated'] %}
+<div style="float: left; padding-right: 15px;padding-bottom: 80px;padding-top: 24px;">
+<img src="/thumb/{{ d['fpath'] }}" style="border: 1px solid #ddd; padding: 4px;" alt="{{ d['title'] }}" title="{{ d['title'] }}" />
+</div>
+{% endif %}
+{% if "admin" in session %}
+<input type="text" value="{{ d['title'] }}" class="inputTitle" style="width: 400px; height:30px;" />
+{% else %}
+<h2 style="font-size: 16px; cursor: pointer;" class="h2Title" data-oid="{{ d['_id'] }}" data-title="{{ d['title']|truncate(50)|slug }}">{{ d['title']|truncate(50) }}</h2>
+{% endif %}
+<p style="font-size: 12px; padding-bottom: 0;">{{ d['snippet'] }}</p>
+<p style="font-size: 11px;">
+Added: {{ d['added']|humanize }}<br />
+Updated: {{ d['thumb_updated']|humanize }}<br />
+Filetype: Portable Document Format (PDF)<br />
+Source: &nbsp;<a href="/view/{{ d['_id'] }}" rel="nofollow, noindex" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a><br />
+Report Abuse: <span class="glyphicon glyphicon-flash" aria-hidden="true" style="color: red;" data-oid="{{ d['_id'] }}" data-title="{{ d['title']|truncate(50)|slug }}"></span><span class="glyphicon glyphicon-saved abused" aria-hidden="true" style="color: red; display: none;"></span><br />
+Add to your collection: <span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: green; cursor: pointer;" data-oid="{{ d['_id'] }}"></span><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: green; display: none;"></span>
+</p>
+{% if "admin" in session %}
+<button type="submit" class="buttonUpdate" data-oid="{{ d['_id'] }}">Update</button>
+<a href="/read/{{ d['_id'] }}/{{ d['title']|slug }}" target="_blank" style="font-size: 13px;">Read this file</a>
+<a href="http://docs.google.com/viewer?url={{ d['url'] }}&a=bi&pagenumber=1&w=" target="_blank" style="font-size: 13px;">View Larger Thumb</a>
+{% endif %}
+</div>
+{% endfor %}
+</div><!--/span-->
+<div class="span4">
+<div class="hero-unit smallerTopPadding">
+<h3>Sponsored Ads</h3>
+<p>Donec id elit non mi porta gravida at eget metus. Fusce
+dapibus, tellus ac cursus commodo, tortor mauris condimentum
+nibh, ut fermentum.. </p>
+</div>
+</div><!--/span-->
+</div>
+<!-- end row-->
+<!--start row-->
+<div class="row-fluid">
+<div class="hero-unit smallerTopPadding" style="border-left: 5px solid #f0ad4e;">
+<ul class="pager pager-sm">
+<li class="previous disabled"><a href="#" rel="noindex, follow">&larr; Older</a></li>
+<li class="next"><a href="/page/2" rel="noindex, follow">Newer &rarr;</a></li>
+</ul>
+</div>
+</div>
+<!--end row-->
+<!-- Start modal -->
+<div id="added" style="display: none;">
+<p>Added to your collection.</p>
+</div>
+<!-- End modal -->
+{% endblock %}
+{% block js %}
+{% if "admin" in session %}
+<script>
+$(document).ready(function() {
+$(".buttonUpdate").click(function() {
+var oid = $(this).attr("data-oid");
+var title = $(this).parent().find("input").val();
+// alert(oid + " " + title);
+if (oid === "" || title === "") {
+alert("can't input empty data!");
+} else {
+$.ajax({
+url: "/admin/update-on-the-fly",
+type: "POST",
+data: {"oid": oid, "title": title},
+success: function(response) {
+console.log(response);
+}
+})
+}
+return false;
+})
+})
+</script>
+{% endif %}
+<script>
+$(document).ready(function() {
+$(".glyphicon-flash").click(function() {
+// report abuse
+var oid = $(this).attr("data-oid");
+var title = $(this).attr("data-title");
+var username = "{{ session.username }}";
+if (username === "") {
+alert("please login");
+} else {
+$.ajax({
+url: "/report-abuse",
+type: "POST",
+data: {"oid": oid, "title": title},
+success: function(response) {
+console.log(response);
+}
+})
+}
+$(this).hide();
+$(this).parent().find(".abused").fadeIn();
+return false;
+})
+$(".glyphicon-plus").click(function() {
+var oid = $(this).attr("data-oid");
+var username = "{{ session.username }}";
+if (username === "") {
+alert("please login");
+} else {
+$.ajax({
+url: "/users-add-collection",
+type: "POST",
+data: {"oid": oid},
+success: function(response) {
+console.log(response);
+}
+})
+}
+$(this).hide();
+$(this).parent().find(".glyphicon-ok").fadeIn();
+return false;
+})
+$(".h2Title").click(function() {
+var oid = $(this).attr("data-oid");
+var title = $(this).attr("data-title");
+window.open("/read/" + oid + "/" + title);
+// alert("/read/" + oid + "/" + title);
+return false;
+})
+$("h1").click(function() {
+var oid = $(this).attr("data-oid");
+var title = $(this).attr("data-title");
+window.open("/read/" + oid + "/" + title);
+// alert("/read/" + oid + "/" + title);
+return false;
+})
+})
+</script>
+{% endblock %}

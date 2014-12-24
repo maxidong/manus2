@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{ meta_desc }} | SEEPDF">
+<meta name="keywords" content="{{ meta_key }}, ebooks, pdf, digital book, document share">
+<meta name="author" content="seepdf.com">
+
+    <title>REGISTER PDF</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="/static/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <!-- Timeline CSS -->
+    <link href="/static/css/plugins/timeline.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/static/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Morris Charts CSS -->
+    <link href="/static/css/plugins/morris.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="/static/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<style>
+h1,h2 {font-family: 'Oswald', sans-serif;letter-spacing:-1px;}
+body {font-family: 'Roboto Condensed', sans-serif;}
+body {color:#777;}
+a {color:#999;}
+.tombol{background:lightgreen;border-radius:22px;box-shadow: 0 2px 5px darkgreen inset;color:#fff;float:left;margin-top:3px;padding:10px;text-shadow: 0 1px 1px #444;}
+.tomboltitel{color: #ff8000;float:left;font-size: 18px;font-weight:bold;letter-spacing:-1px; margin-top:7px;text-shadow: 0 1px #fff;}
+.iframe{background:#d0d0d0;border-left:none; border-top: 1px solid #aaa;border-right: 1px solid #aaa;border-radius: 5px 5px 0 0;color: #717171;text-shadow: 0 1px #fff;float:left;border-bottom:none;padding:1px 12px}
+.iframebottom{background:#d0d0d0;border-left:none; border-bottom: 1px solid #aaa;border-right: 1px solid #aaa;border-radius:0 0 5px 5px ;color: #717171;text-shadow: 0 1px #fff;float:left;padding:1px 12px;margin-bottom:15px;margin-top:-5px;}
+.pfooter{color:#cacaca;margin-bottom: 5px;text-shadow: 0 1px 2px #000;}
+.embedarea{background: #fff;border: 1px solid #ddd;color: #999;font-size: 10px; overflow: hidden; padding: 10px;width: 368px;}
+.xy a{color:#fff;text-shadow:0px 1px 1px #444;}
+.xy a:hover{color:#444;text-shadow:0px 1px 1px #fff; text-decoration:none;}
+
+</style>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div style="margin-bottom: 0;height:20px;background:#444;">
+</div>
+<div class="col-lg-12" style="background:none repeat scroll 0 0%, -moz-linear-gradient(center top , #515155 0px, #3c3c3e 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);">
+<!-- Navigation -->
+<div class="col-lg-2"></div>
+<div class="col-lg-2">
+      	<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0px; height: 80px; padding: 25px 0 0;background:none;border:none;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html" style="padding:15px 0;font-family: 'Oswald', sans-serif;letter-spacing:-1px;color:#fff;font-size:40px;letter-spacing:-2px;text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);"><b>
+	<font color="#66bc31">127.0.0.1:</font></b>5000</a>
+</div>
+</div>
+
+<!-- /.navbar-header -->
+
+          
+<div class="col-lg-6" style="background:none;border:none;padding-top:45px;">
+	<p style="margin: 5px 0 0; float: right;">
+	{% if session['username'] %}
+	<span class="btn btn-outline btn-success btn-xs xy"><a  href="/users/{{ session['username'] }}">Profile</a></span>
+	<span class="btn btn-outline btn-success btn-xs xy"><a  href="/users/logout">Logout</a></span>
+	{% else %}
+	<span class="btn btn-outline btn-success btn-xs xy"><a href="/users/register">Register</a></span>
+	<span class="btn btn-outline btn-success btn-xs xy"><a href="/users/login">Login</a></span>
+	{% endif %}
+	<span class="btn btn-outline btn-success btn-xs xy"><a href="/contact">Contact</a></span>
+	<span class="btn btn-outline btn-success btn-xs xy"><a href="/about">About</a></span>
+	<span class="btn btn-outline btn-success btn-xs xy"><a href="/disclaimer">Disclaimer</a></span>
+	</p>
+</div>
+<div class="col-lg-2"></div>
+</div>
+<div class="col-lg-12" style="margin-bottom: 0;height:5px;background: #ea1717; /* Old browsers */
+background: none repeat scroll 0 0%, -moz-linear-gradient(center top , #66bc31 0px, #4b8424 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)
+">
+</div>
+<div id="page-wrapper" style="border:1px solid #ddd;">
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default" style="border:none;">
+			<div class="panel-body" style="background:#fff;padding:0;">
+				
+				<div class="col-lg-12" style="padding: 15px 0 0;">
+<!--=========looping mulai==========================================================================================================================-->
+<div class="col-md-3"></div>
+            <div class="col-md-4">
+                <div class="login-panel panel panel-default" style="margin: 93px 0;">
+                    <div class="panel-heading" style="background:none repeat scroll 0 0%, -moz-linear-gradient(center top , #66bc31 0px, #4b8424 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);border:1px solid #ddd;padding-top:0px;padding-bottom:0px;">
+                        <h5 style="color:#fff;font-weight:bold;text-shadow:0px 1px 1px #444;padding-:">Please Register</h3>
+                    </div>
+                    <div class="panel-body">
+                    <!-- show messages error -->
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <div class="alert alert-info alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        {%- for message in messages %}
+                        {{ message }} or <a class="alert-link" href="#">Back to Index</a>.
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                    {% if error %}
+                    <div class="alert alert-danger alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        {{ error }} <a class="alert-link" href="#">Back to Index</a>.
+                    </div>
+                    {% endif %}
+                    <!-- end of error messages -->
+                        <form role="form" method="post">
+			              {{ form.hidden_tag() }}
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Username" name="username" id="username" type="text" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Password" name="password" id="password" type="password" value="">
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                    </label>
+                                </div>
+                                <!-- Change this to a button or input when using this as a form -->
+				<input type="submit" class="btn btn-lg btn-default btn-block" value="Log in" style="background:none repeat scroll 0 0%, -moz-linear-gradient(center top , #ffffff 0px, #eeeeee 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);">
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+<div class="col-md-5"></div>
+
+<!--=========looping mulai==========================================================================================================================-->
+</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="row">
+<div style="margin-bottom:20px;float:left;" class="col-lg-12">
+<div>
+    <span><a title="Apple Users Manuals" href="/tags/apple"><img width="40" height="40" class="img-thumbnail" style="border:none;margin-top: -10px;" alt="Apple" 
+src="/static/images/apple.jpg"></a></span> 
+    <span><a title="Acer Users Manuals" href="/tags/Acer"><img width="66" height="40" class="img-thumbnail" style="border:none;" alt="Acer" 
+src="/static/images/acer.png"></a></span>
+    <span><a title="Compaq Users Manuals" href="/tags/compaq"><img  width="88" height="40" class="img-thumbnail" style="border:none;" alt="Compaq" 
+src="/static/images/compaq.png"></a></span>
+    <span><a title="Corsair Users Manuals" href="/tags/Corsair"><img width="110" height="40" class="img-thumbnail" style="border:none;" alt="Corsair" 
+src="/static/images/corsair.png"></a></span>
+    <span><a title="Intel Users Manuals" href="/tags/intel"><img width="66" height="25" class="img-thumbnail" style="border:none;" alt=Intel" 
+src="/static/images/intel.png"></a></span>
+    <span><a title="Samsung Users Manuals" href="/tags/samsung"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Samsung" 
+src="/static/images/samsung.gif"></a></span> 
+    <span><a title="Beko Users Manuals" href="/tags/beko"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Beko" 
+src="/static/images/beko.gif"></a></span> 
+    <span><a title="LG Users Manuals" href="/tags/lg"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="LG" 
+src="/static/images/lg.gif"></a></span> 
+    <span><a title="Indesit Users Manuals" href="/tags/indesit"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Indesit" 
+src="/static/images/indesit.jpg"></a></span> 
+    <span><a title="Bush Users Manuals" href="/tags/bush"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Bush" 
+src="/static/images/bush.gif"></a></span> 
+    <span><a title="Siemens Users Manuals" href="/tags/siemens"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Siemens" 
+src="/static/images/siemens.gif"></a></span> 
+    <span><a title="Candy Users Manuals" href="/tags/candy"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Candy" 
+src="/static/images/candy.gif"></a></span> 
+    <span><a title="Bosch Users Manuals" href="/tags/bosch"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Bosch" 
+src="/static/images/bosch.gif"></a></span> 
+    <span><a title="Belling Users Manuals" href="/tags/belling"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Belling" 
+src="/static/images/belling.gif"></a></span> 
+    <span><a title="AEG Users Manuals" href="/tags/aeg"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="AEG" 
+src="/static/images/aeg.jpg"></a></span>
+  </div>
+</div>
+
+<div class="col-lg-12">
+<h2 style="border-bottom:none;margin-bottom:0px;margin-top:16px;font-size:20px;color:#999;" class="page-header">Popular Documents&nbsp;&nbsp; &nbsp;&nbsp;<i style="color:#66bc31;text-shadow: 0 1px #444;font-size:20px;" class="fa fa-arrow-circle-down fa-lg"></i></h2>
+</div>
+
+<div style="margin-bottom:20px;" class="col-lg-12">
+<div style="padding-left:0px;border-top:1px solid #ddd;padding-top:5px;" class="col-md-13">
+    <small>
+      <div style="text-transform: uppercase;" class="uppercase">
+        <span><a href="/cat/motors-engines" title="Motors and Engines Manual" class="popularcategory">Engines</a></span> &nbsp;•&nbsp; 
+        <span><a href="/cat/atvs" title="ATVs &amp; Utility Vehicles Manual" class="popular">ATVs &amp; Utility Vehicles</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/chainsaws" title="Chainsaws Manual">Chainsaws</a></span> &nbsp;•&nbsp;
+	<span><a class="speclink" href="/cat/televisions" title="Televisions Manual">Televisions</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/projectors" title="Projectors Manual">Projectors</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/laptops" title="Laptops Manual">Laptops</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/mobile-phones" title="Mobile Phones Manual">Mobile Phones</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/camcorders" title="Camcorders Manual">Camcorders</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/generators" title="Generators Manual">Generators</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/lawnmowers" title="Lawnmowers Manual">Lawnmowers</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/coffee-machines" title="Coffee Machines Manual">Coffee Machines</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/microwaves" title="Microwaves Manual">Microwaves</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/sewing-machines" title="Sewing Machines Manual">Sewing Machines</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/dehumidifiers" title="Dehumidifiers Manual">Dehumidifiers</a></span>
+    	<span><a class="speclink" href="/cat/motorcycles-scooters" title="Motorcycles &amp; Scooters Manual">Motorcycles &amp; Scooters</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/tractors-farm-machineries" title="Tractors &amp; Farm Machineries Manual">Tractors &amp; Farm Machineries</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/diagnostics-health-monitors" title="Diagnostics &amp; Health Monitors Manual">Diagnostics &amp; Health Monitors</a></span> &nbsp;•&nbsp; 
+        <span><a class="speclink" href="/cat/water-heaters-boilers" title="Water Heaters &amp; Boilers Manual">Water Heaters &amp; Boilers</a></span>
+      </div>
+    </small>
+  </div>
+<!--<font color="#d10303">Sponsored Links</font><br>
+<img width="728" height="90" border="0" galleryimg="no" alt="Advertisement" src="http://s1.2mdn.net/4196952/1-ID_EN_shoes_728X90.gif">-->
+		</div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+<div style="margin-bottom: 0;height:5px;background:none repeat scroll 0 0%, -moz-linear-gradient(center top , #66bc31 0px, #4b8424 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);">
+</div>
+<div class="row" style="margin-bottom: 0px; padding: 25px 0;background:none repeat scroll 0 0%, -moz-linear-gradient(center top , #515155 0px, #3c3c3e 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);border-bottom: 1px solid #aaa;">
+	<div class="col-lg-10" style="float:right;">
+		<div class="col-lg-9">
+			<p class="pfooter">
+				© Macro Data Inc. All rights reserved. Privacy Policy | Ad Choice | Terms of Use | Mobile User Agreement |</p><br>
+			<p style="color:#fff;border-top: 1px solid #666d76; box-shadow: 0 -1px #222;margin-top: -20px;;margin-bottom:0px;"></p>
+			<div class="col-lg-3">
+				<p style="padding-top: 40px;height:150px;border-right: 1px solid #222; box-shadow: 1px 0 #666d76;">
+				<span style="font-family: 'Oswald', sans-serif;letter-spacing:-1px;color:#fff;font-size:40px;letter-spacing:-2px;
+				text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);"><b>
+				<font color="#66bc31">MACRO</font></b>data</span>
+			</div>
+			<div class="col-lg-3">
+				<p style="padding-top: 10px;border-right: 1px solid #222; box-shadow: 1px 0 #666d76;">
+					<span class="pfooter" style="color:#fff;"><b>MacroData</b></span><br>
+					<a class="pfooter" href="/">Home</a><br>
+                    			<a class="pfooter" href="/">Register</a><br>
+                    			<a class="pfooter" href="/">Login</a><br>
+					<a class="pfooter" href="/">Contact</a><br>
+					<a class="pfooter" href="/">About</a><br>
+					<a class="pfooter" href="/">Disclaimer</a><br>
+				</p>
+			</div>
+			<div class="col-lg-3">
+				<p style="padding-top: 10px;">
+					<span class="pfooter" style="color:#fff;"><b>Follow Us</b></span><br>
+                    			<a class="pfooter" href="/"><i class="fa fa-facebook fa-lg"></i>&nbsp;&nbsp;&nbsp;Facebook</a><br>
+                    			<a class="pfooter" href="/"><i class="fa fa-google-plus fa-lg"></i>&nbsp;Googleplus</a><br>
+					<a class="pfooter" href="/"><i class="fa fa-twitter fa-lg"></i>&nbsp;Twitter</a><br>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+    </div>
+    <!-- /#wrapper -->
+    
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="js/plugins/morris/raphael.min.js"></script>
+    <script src="js/plugins/morris/morris.min.js"></script>
+    <script src="js/plugins/morris/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/sb-admin-2.js"></script>
+
+</body>
+
+</html>

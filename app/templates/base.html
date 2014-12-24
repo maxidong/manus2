@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{% block title %}{% endblock %} | {{ config['SITE_NAME'] }}</title>
+
+{% block metadesc %}
+{% endblock %}
+
+<!-- Le styles -->
+<link href='http://fonts.googleapis.com/css?family=Allura|Average+Sans' rel='stylesheet' type='text/css'>
+<link href="/static/css/bootstrap.css" rel="stylesheet">
+<link href="/static/css/bootstrap.2.css" rel="stylesheet">
+
+{% block meta %}
+{% endblock %}
+
+{% block bootstrap3 %}
+{% endblock %}
+
+<link href="/static/css/default.css" rel="stylesheet">
+<link href="/static/css/style.css" rel="stylesheet">
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- Fav and touch icons -->
+<link rel="shortcut icon" href="favicon.ico">
+
+{% block css %}
+{% endblock %}
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <a id="top"></a>
+
+    <div class="row-fluid">
+
+    	<div class="span8 logo">
+	    	<a href="/" title="Framing Framework">{{ config["APP_TITLE"] }}</a>
+    	</div>
+
+    	<div class="span3 offset1 telefon">
+	    	<p>tel: 0123-456789</p>
+	    </div>
+
+    	<div class="clearfix"></div>
+
+    </div>
+
+	<div class="row-fluid navMargin">
+		<div class="span12">
+			<div class="navbar navbar-inverse">
+				<div class="navbar-inner">
+				    <ul class="nav">
+					    <li class="active"><a href="/">Home</a></li>
+					    <li class="divider-vertical"></li>
+
+                        {#
+					    <li class="dropdown">
+					    	<a href="#" id="drop1" role="button" class="dropdown-toggle" data-toggle="dropdown">
+							About us <b class="caret"></b></a>
+		                      <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+		                      	<li role="menuitem"><a tabindex="-1" href="#">
+								Team</a></li>
+		                      	<li role="menuitem"><a tabindex="-1" href="#">Gallery</a></li>
+		                      </ul>
+					    </li>
+					    <li class="divider-vertical"></li>
+					    <li><a href="#">Services</a></li>
+					     <li class="divider-vertical"></li>
+					    <li class="dropdown">
+							<a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">
+							Taxes <b class="caret"></b></a>
+		                      <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+		                        <li role="menuitem"><a tabindex="-1" href="#">Suppage</a></li>
+		                        <li role="menuitem" class="divider"></li>
+		                        <li role="menuitem"><a tabindex="-1" href="#">Subpage</a></li>
+		                        <li role="menuitem"><a tabindex="-1" href="#">Subpage</a></li>
+		        		</ul>
+					</li>
+			<li class="divider-vertical"></li>
+                        #}
+                        {% if session['username'] %}
+                        <li><a href="/users/{{ session['username'] }}">Profile</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="/users/logout">Logout</a></li>
+                        <li class="divider-vertical"></li>
+                        {% else %}
+                        <li><a href="/users/register">Register</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="/users/login">Login</a></li>
+                        <li class="divider-vertical"></li>
+                        {% endif %}
+			<li><a href="/contact">Contact</a></li>
+                       <li><a href="/about">About</a></li>
+                       <li class="divider-vertical"></li>
+                        <li><a href="/disclaimer">Disclaimer</a></li>
+                       <li class="divider-vertical"></li>
+				   </ul>
+			   </div>
+			</div>
+		</div>
+	</div>
+
+    {% block content %}
+    {% endblock %}
+
+    <!--start row footer-->
+	<div class="row-fluid nomargin">
+
+		<hr>
+
+		<footer>
+			<p>All Rights Reserved. Products and names mentioned are the property of their respective owners.</p>
+			<p>{{ config["DOMAIN_NAME"] }} &copy; 2014 Ultimate User Manual User Guide.</p>
+		</footer>
+
+	</div><!--end row footer-->
+
+</div><!--/container-->
+
+        <p id="back-top-general">
+            <a href="#top"><span></span></a>
+        </p>
+           <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="/static/js/jquery-1.10.2.js"></script>
+        <!--script src="/static/js/bootstrap.js"></script-->
+        <script src="/static/js/bootstrap.2.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+            // hide #back-top first
+            $("#back-top").hide();
+            $("#back-top-general").hide();
+            // fade in #back-top
+            $(function () {
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 100) {
+                        $('#back-top').fadeIn();
+                        $('#back-top-general').fadeIn();
+                    } else {
+                        $('#back-top').fadeOut();
+                        $('#back-top-general').fadeOut();
+                    }
+                });
+                // scroll body to 0px on click
+                $('#back-top a').click(function () {
+                    $('body,html').animate({
+                        scrollTop: 0
+                    }, 800);
+                    return false;
+                });
+                // scroll body to 0px on click
+                $('#back-top-general a').click(function () {
+                    $('body,html').animate({
+                        scrollTop: 0
+                    }, 800);
+                    return false;
+                    });
+                });
+            });
+        </script>
+        {% block js %}
+        {% endblock %}
+    </body>
+</html>

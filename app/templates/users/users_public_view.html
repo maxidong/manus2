@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ username }}'s Profile - Joined {{ data['joined_at'] }}
+{% endblock %}
+
+{% block bootstrap3 %}
+<link href="/static/css/bootstrap.css" rel="stylesheet">
+{% endblock %}
+
+{% block css %}
+<style>
+.book {
+	padding: 15px 0 0 0;
+	margin: auto;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container hero-unit">
+    <div class="row-fluid">
+        <h1 style="font-size: 20px; padding-left: 12px;">Your Books Collection</h1>
+        {% for fav in favorites %}
+
+          <a href="/read/{{ fav[0] }}/{{ fav[3] }}">
+              {% if fav[1] %}
+              <img src="/thumb/{{ fav[2] }}" style="border: 1px solid #ddd; padding: 4px; margin-right: 17px; width: 100px; height: 135px; margin-bottom: 15px;">
+              {% else %}
+              <img src="/static/images/no_logo.gif" style="border: 1px solid #ddd; padding: 4px; margin-right: 17px; width: 100px; height: 135px;  margin-bottom: 15px;" title="{{ fav[3] }}" alt="{{ fav[3] }}">
+              {% endif %}
+          </a>
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+<title>Inject Single URL v.{{ config['VERSION'] }}</title>
+{% endblock %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Inject Single URL</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <p>Inject Single URL:</p>
+                            <ol>
+                                <li>Input a URL to pdf file</li>
+                                <li>Process: thumbnailing, titling, snippeting, urling and inputing into dbase</li>
+                                <li>Jumlah data so far: {{ count }}</li>
+                            </ol>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="form-group col-lg-5">
+                                <label>Enter a URL to pdf file</label>
+                                <input class="form-control" id="inputURL">
+                                <p class="help-block">Please enter a url to pdf file.</p>
+                            </div>
+                            <div class="form-group col-lg-5">
+                                <label>Enter title</label>
+                                <input class="form-control" id="inputTitle">
+                                <p class="help-block">Please enter a title for pdf file.</p>
+                            </div>
+                            <div class="form-group col-lg-5">
+                                <label>Enter a snippet for pdf file</label>
+                                <textarea class="form-control" id="textareaSnippet" style="height: 120px;"></textarea>
+                                <p class="help-block">Please enter a snippet for pdf file.</p>
+                                <button type="submit" id="buttonProcess" class="btn btn-default">Process!</button><br />
+                            </div>
+
+
+                            <div class="result"></div>
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+{% endblock %}
+
+    </div>
+    <!-- /#wrapper -->
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+        $("#buttonProcess").click(function() {
+            var url = $("#inputURL").val();
+            var title = $("#inputTitle").val();
+            var snippet = $("#textareaSnippet").val();
+            if (url === "" || title === "" || snippet === "") {
+                alert("please fill all the input!");
+            } else {
+                // ajax
+                $.ajax({
+                    url: "/admin/inject-single-url",
+                    type: "POST",
+                    data: {"url": url, "title": title, "snippet": snippet},
+                    success: function(response) {
+                        console.log(response);
+                    }
+                })
+            }
+            return false;
+        })
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+<title>Admin Settings v.1.0.</title>
+{% endblock %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Admin Settings</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <p>Admin Settings:</p>
+                            <p>Settings untuk data-data penting</p>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label>Enter a Site URL</label>
+                                <input class="form-control" id="inputURL" value="{{ data['url'] }}">
+                                <p class="help-block">Please enter a site URL.</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Enter a Site Name</label>
+                                <input class="form-control" id="inputName" value="{{ data['name'] }}">
+                                <p class="help-block">Please enter a site name.</p>
+                            </div>
+                            <button type="submit" id="buttonSave" class="btn btn-default">Save!</button><br />
+
+                            <div class="result"></div>
+
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+{% endblock %}
+
+    </div>
+    <!-- /#wrapper -->
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+        $("#buttonSave").click(function() {
+            var siteUrl = $("#inputURL").val();
+            var siteName = $("#inputName").val();
+            if (siteUrl !== "" || siteName !== "") {
+                // post to ajax
+                $.ajax({
+                    url: "/admin/settings",
+                    type: "POST",
+                    data: {"url": siteUrl, "name": siteName},
+                    success: function(response) {
+                        console.log(response);
+                        window.location.reload();
+                    }
+                })
+            } else {
+                alert("form-nya diisi dong mas!");
+            }
+            return false;
+        })
+    })
+</script>
+{% endblock %}

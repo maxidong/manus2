@@ -1,0 +1,10 @@
+*~
+*.pyc
+bin/
+include/
+lib/
+local/
+.idea/
+assets/
+/admin/*
+*.json

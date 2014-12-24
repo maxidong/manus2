@@ -1,0 +1,74 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+<title>Popular Search Term v.1.0.</title>
+{% endblock %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Popular Search Term</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <p>Popular Search Term:</p>
+                            <ol>
+                                <li>Setiap kali visitor datang ke halaman /search/search-term</li>
+                                <li>Increment database korioterms: 1</li>
+                                <li>Untuk yang populer nanti bisa dicarikan keyword turunan dan</li>
+                                <li>disearchkan lagi menggunakan tools grabber</li>
+                                <li>Nanti dibuatkan lagi halaman thumbnailer/search-term</li>
+                                <li>Tujuannya biar halaman yang populer memiliki thumbnail yang bagus2 :)</li>
+                            </ol>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Search Term</th>
+                                            <th>Hits</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr class="odd gradeX">
+                                            <td>1</td>
+                                            <td><span class="spanPinger">search term</span></td>
+                                            <td>1000</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+{% endblock %}
+
+    </div>
+    <!-- /#wrapper -->
+
+{% block js %}
+<script>
+
+</script>
+{% endblock %}

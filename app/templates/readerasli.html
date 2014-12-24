@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+
+{% block title %}{{ data['title'] }}{% endblock %}
+
+{% block meta %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Read {{ data['title']|title }} id #{{ data['_id'] }} | SEEPDF">
+<meta name="keywords" content="ebooks, pdf, digital book, document share, {{ data['title'] }}">
+<meta name="author" content="seepdf.com">
+
+<link rel="canonical" href="/read/{{ data['_id'] }}/{{ data['title']|truncate(50)|slug }}" />
+{% endblock %}
+
+{% block css %}
+<style>
+#lean_overlay {
+    position: fixed;
+    z-index: 10000;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
+}
+#test {
+    width: 600px;
+    padding: 30px;
+    display: none;
+    z-index: -1;
+    background: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+}
+#sukses {
+    width: 600px;
+    padding: 30px;
+    display: none;
+    z-index: -1;
+    background: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+}
+#share {
+    width: 600px;
+    padding: 30px;
+    display: none;
+    z-index: -1;
+    background: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+}
+#added {
+    width: 600px;
+    padding: 30px;
+    display: none;
+    z-index: -1;
+    background: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+}
+#download {
+    width: 600px;
+    padding: 30px;
+    display: none;
+    z-index: -1;
+    background: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+}
+</style>
+{% endblock %}
+
+    {% block content %}
+	<div class="row-fluid">
+		<div class="row-fluid">
+
+			<div class="hero-unit">
+	    		<div class="span5 banner"></div>
+
+				<div class="span7">
+                    {% if "admin" in session %}
+                    <input type="text" value="{{ data['title'] }}" class="span7" style="width: 100%;"/>
+                    {% else %}
+					<h1 style="font-size: 18px;">{{ data['title']|safe|title }}</h1>
+                    {% endif %}
+						<p style="padding-bottom: 0;">{{ data['snippet'] }}</p>
+                        <p style="font-size: 11px;">
+                            Added: {{ data['added']|humanize }}<br />
+                            Updated: {{ data['updated'] }}<br />
+                            Filetype: Portable Document Format (PDF)<br />
+                            Suggested tags:
+                            {% for tag in tags %}
+                            <a href="/tags/{{ tag.term|slug }}">{{ tag.term }}</a>
+                            {% if not loop.last %},{% else %}.{% endif %}
+                            {% endfor %}
+                        </p>
+		           		<p class="noLink">
+                            <a class="btn btn-primary btn-large" id="aDownload" name="download" href="#download">Download</a>
+                            {% if "admin" in session %}
+                            <a class="btn btn-primary btn-large" id="buttonUpdate" data-oid="{{ data['_id'] }}">Update</a>
+                            {% endif %}
+                        </p>
+				</div>
+
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+    </div>
+    <!--end row-->
+
+
+	<!--start row-->
+    <div class="row-fluid">
+		<div class="hero-unit smallerTopPadding" style="border-left: 5px solid #f0ad4e;">
+            <h3 style="font-size: 11px;">Reader | <a id="go" name="test" href="#test">Embed</a> | <a id="aShare" name="share" href="#share">Share</a>
+                {% if session.username %}
+                | <span id="plusAddColl" data-oid="{{ data['_id'] }}"><a id="aAdd" name="added" href="#added">Add to your collection</a></span>
+                {% endif %}
+                | <a href="/download/{{ data['title'] }}" rel="noindex, nofollow">Download</a>
+            </h3>
+            <p style="padding-bottom: 0px;"></p>
+            <iframe src="http://docs.google.com/viewer?url={{ data['url'] }}&embedded=true" frameborder="0" style="width: 100%; height: 600px;"></iframe>
+		</div>
+    </div>
+    <!--end row-->
+
+
+    <!--start comments row-->
+    <div class="row-fluid">
+		<div class="hero-unit smallerTopPadding" style="border-left: 5px solid #de0f6f;">
+            <h3 style="font-size: 14px;">Comments</h3>
+            {% if data['comments'] %}
+            {% for comment in data['comments'] %}
+            <p style="padding-top: 0; padding-bottom: 0;">{{ comment['text'] }}</p>
+            <p style="font-size: 12px; padding-top: 0; padding-bottom: 0;">[by: {{ comment['username'] }}&nbsp; at: {{ comment['added']|humanize }}]</p>
+            <hr>
+            {% endfor %}
+            {% endif %}
+            <textarea style="width: 100%; height: 150px;"></textarea>
+            {% if session.username %}
+            <a id="aSukses" name="sukses" href="#sukses"><button id="buttonSubmitComment">Submit</button></a>
+            {% else %}
+            <a href="/users/login?next={{ request.url }}"><button>Please login to submit comment</button></a>
+            {% endif %}
+            <p style="padding-bottom: 0px;"></p>
+		</div>
+    </div>
+    <!--end row-->
+
+
+    <!-- Start modal -->
+    <div id="test">
+        <p>Embed code for this ebooks:</p>
+        <textarea style="width: 535px; height: 200px; font-size: 12px;"><table><tr><td><a href="{{ config['DOMAIN_URL'] }}/read/{{ data['_id'] }}/{{ data['title']|slug }}">Click here to download this ebook</a></td></tr><tr><td><iframe src="http://docs.google.com/viewer?url={{ data['url'] }}&embedded=true" frameborder="0" style="width: 500px; height: 600px;"></iframe></td></tr><tr><td>View more <a href="{{ config['DOMAIN_URL'] }}/read/{{ data['_id'] }}/{{ data['title']|slug }}">ebooks</a> on <a href="{{ config['DOMAIN_URL'] }}">{{ config['DOMAIN_URL'] }}</a></td></tr></table></textarea>
+    </div>
+    <!-- End modal -->
+
+    <!-- Start modal -->
+    <div id="sukses" style="display: none;">
+        <p>Thank you for the comment</p>
+    </div>
+    <!-- End modal -->
+
+    <!-- Start modal -->
+    <div id="added" style="display: none;">
+        <p>Added to your collection.</p>
+    </div>
+    <!-- End modal -->
+
+    <!-- Start modal -->
+    <div id="share" style="display: none;">
+        <p>Share this.</p>
+    </div>
+    <!-- End modal -->
+
+    <!-- Start modal -->
+    <div id="download" style="display: none;">
+        <p>Please wait while we are checking the source link.</p>
+        <img src="/static/images/loading.gif" id="imgLoading">
+        <p id="pMessage" style="display: none;">
+            Sorry the source to the books server seems to be broken, we are strongly
+            encourage you to register and add to your collection instead of
+            downloading. <br /><br />
+            Apologize for this inconvenience.
+        </p>
+    </div>
+    <!-- End modal -->
+
+    {% endblock %}
+
+
+{% block js %}
+{% if "admin" in session %}
+<script>
+    $(document).ready(function() {
+        $("#buttonUpdate").click(function() {
+            var oid = $(this).attr("data-oid");
+            var title = $("#buttonUpdate").parent().parent().find("input").val()
+            // alert(oid + " " + title);
+            if (oid === "" || title === "") {
+                alert("can't input empty data!");
+            } else {
+                $.ajax({
+                    url: "/admin/update-on-the-fly",
+                    type: "POST",
+                    data: {"oid": oid, "title": title},
+                    success: function(response) {
+                        // console.log(response);
+                        window.location.reload();
+                    }
+                })
+            }
+            return false;
+        })
+    })
+</script>
+{% endif %}
+
+{% if session.username %}
+<script>
+    $(document).ready(function() {
+        $("#aSukses").click(function() {
+            var text = $(this).parent().find("textarea").val();
+            var oid = "{{ data['_id'] }}";
+            if (text === "") {
+                alert("whatis the comment?");
+            } else {
+                // ajax
+                $.ajax({
+                    url: "/add-comment",
+                    type: "POST",
+                    data: {"oid": oid, "text": text},
+                    success: function(response) {
+                        console.log(response);
+                        window.setTimeout(function() {
+                            window.location.reload();  // refresh the page
+                        }, 500);
+                    }
+                })
+            }
+            return false;
+        })
+    })
+</script>
+{% endif %}
+
+<script>
+    $("#plusAddColl").click(function() {
+        var oid = $(this).attr("data-oid");
+        // ajax
+        $.ajax({
+            url: "/users-add-collection",
+            type: "POST",
+            data: {"oid": oid},
+            success: function(response) {
+                console.log(response);
+                // window.location.reload();
+                window.setTimeout(function() {
+                    window.location.reload();  // refresh the page
+                }, 500);
+            }
+        })
+        return false;
+    })
+</script>
+<script src="/static/js/jquery.leanModal.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#go").leanModal();
+        $("#aSukses").leanModal();
+        $("#aAdd").leanModal();
+        $("#aShare").leanModal();
+        $("#aDownload").leanModal();
+
+        // download animation
+        $("#aDownload").click(function() {
+            setTimeout(function() {
+                $('#imgLoading').fadeOut('fast');
+                $("#pMessage").fadeIn("slow");
+            }, 10000); // 10 seconds
+        })
+    })
+</script>
+{% endblock %}

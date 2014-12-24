@@ -1,0 +1,103 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+<title>Built-in Google Grabber v.1.0.</title>
+{% endblock %}
+
+{% block content %}
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Built-in Google Grabber</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <p>Built-in Google Grabber:</p>
+                            <ol>
+                                <li>Input a keyword</li>
+                                <li>Cek apakah keyword tersebut sudah di database atau belum</li>
+                                <li>Jika belum, searchkan ke google</li>
+                                <li>Masukkan hasilnya ke database</li>
+                                <li>Jumlah data so far: {{ count }}</li>
+                            </ol>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="form-group col-lg-5">
+                                <label>Enter a Keyword</label>
+                                <input class="form-control" id="inputKeyword">
+                                <p class="help-block">Please enter a keyword to search on Google.</p>
+                                <button type="submit" id="buttonGrab" class="btn btn-default">Grab!</button><br />
+                            </div>
+
+                            <div class="result"></div>
+
+                            {#
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Last Ping</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr class="odd gradeX">
+                                            <td></td>
+                                            <td><span class="spanPinger">Ping now!</span></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                            #}
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+{% endblock %}
+
+    </div>
+    <!-- /#wrapper -->
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+        $("#buttonGrab").click(function() {
+            var keyword = $("#inputKeyword").val();
+            if (keyword !== "") {
+                // post to ajax
+                $.ajax({
+                    url: "/admin/grabber",
+                    type: "POST",
+                    data: {"keyword": keyword},
+                    success: function(response) {
+                        if (response === "null") {
+                            alert("keyword sudah ada!");
+                        } else {
+                            console.log(response);
+                            // alert(response);
+                            window.location.reload();
+                        }
+                    }
+                })
+            } else {
+                alert("keyword-nya diisi dong mas!");
+            }
+            return false;
+        })
+    })
+</script>
+{% endblock %}

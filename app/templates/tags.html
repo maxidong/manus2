@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+{% block meta %}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{ meta_desc }} | SEEPDF">
+<meta name="keywords" content="{{ meta_key }}, ebooks, pdf, digital book, document share">
+<meta name="author" content="seepdf.com">
+
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="{{ tag|replace("-", " ") }}" />
+<meta property="og:description" content="{{ meta_desc }}" />
+<meta property="og:url" content="/tag/{{ tag|slug }}" />
+<meta property="og:site_name" content="ebooks and pdf curator" />
+
+{% for m in meta_key_tags %}
+<meta property="article:tag" content="{{ m }}" />
+{% endfor %}
+<meta property="article:section" content="{{ meta_key_cat }}" />
+<meta property="article:published_time" content="{{ data[0]['added'] }}" />
+{% endblock %}
+
+    <title>TAGS PDF</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="/static/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <!-- Timeline CSS -->
+    <link href="/static/css/plugins/timeline.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/static/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Morris Charts CSS -->
+    <link href="/static/css/plugins/morris.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="/static/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<style>
+h1,h2 {font-family: 'Oswald', sans-serif;letter-spacing:-1px;}
+body {font-family: 'Roboto Condensed', sans-serif;}
+body {color:#777;}
+a {color:#999;}
+.tombol{background:lightgreen;border-radius:22px;box-shadow: 0 2px 5px darkgreen inset;color:#fff;float:left;margin-top:3px;padding:10px;text-shadow: 0 1px 1px #444;}
+.tomboltitel{color: #ff8000;float:left;font-size: 18px;font-weight:bold;letter-spacing:-1px; margin-top:7px;text-shadow: 0 1px #fff;}
+.iframe{background:#d0d0d0;border-left:none; border-top: 1px solid #aaa;border-right: 1px solid #aaa;border-radius: 5px 5px 0 0;color: #717171;text-shadow: 0 1px #fff;float:left;border-bottom:none;padding:1px 12px}
+.iframebottom{background:#d0d0d0;border-left:none; border-bottom: 1px solid #aaa;border-right: 1px solid #aaa;border-radius:0 0 5px 5px ;color: #717171;text-shadow: 0 1px #fff;float:left;padding:1px 12px;margin-bottom:15px;margin-top:-5px;}
+.pfooter{color:#cacaca;margin-bottom: 5px;text-shadow: 0 1px 2px #000;}
+.embedarea{background: #fff;border: 1px solid #ddd;color: #999;font-size: 10px; overflow: hidden; padding: 10px;width: 368px;}
+.xy a{color:#fff;text-shadow:0px 1px 1px #444;}
+.xy a:hover{color:#444;text-shadow:0px 1px 1px #fff; text-decoration:none;}
+
+</style>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<div style="margin-bottom: 0;height:20px;background:#444;">
+</div>
+<div class="col-lg-12" style="background:none repeat scroll 0 0%, -moz-linear-gradient(center top , #515155 0px, #3c3c3e 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);">
+<!-- Navigation -->
+<div class="col-lg-2"></div>
+<div class="col-lg-2">
+      	<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0px; height: 80px; padding: 25px 0 0;background:none;border:none;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/" style="padding:15px 0;font-family: 'Oswald', sans-serif;letter-spacing:-1px;color:#fff;font-size:40px;letter-spacing:-2px;text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);"><b>
+	<font color="#66bc31">127.0.0.1:</font></b>5000</a>
+</div>
+</div>
+
+<!-- /.navbar-header -->
+
+          
+<div class="col-lg-6" style="background:none;border:none;padding-top:45px;">
+	<p style="margin: 5px 0 0; float: right;">
+	{% if session['username'] %}
+	<span class="btn btn-outline btn-success btn-xs xy"><a  href="/users/{{ session['username'] }}">Profile</a></span>
+	<span class="btn btn-outline btn-success btn-xs xy"><a  href="/users/logout">Logout</a></span>
+	{% else %}
+	<span class="btn btn-outline btn-success btn-xs xy"><a href="/users/register">Register</a></span>
+	<span class="btn btn-outline btn-success btn-xs xy"><a href="/users/login">Login</a></span>
+	{% endif %}
+	<span class="btn btn-outline btn-success btn-xs xy"><a href="/contact">Contact</a></span>
+	<span class="btn btn-outline btn-success btn-xs xy"><a href="/about">About</a></span>
+	<span class="btn btn-outline btn-success btn-xs xy"><a href="/disclaimer">Disclaimer</a></span>
+	</p>
+</div>
+<div class="col-lg-2"></div>
+</div>
+<div class="col-lg-12" style="margin-bottom: 0;height:5px;background: #ea1717; /* Old browsers */
+background: none repeat scroll 0 0%, -moz-linear-gradient(center top , #66bc31 0px, #4b8424 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)
+"></div>
+
+            <div class="navbar-default sidebar backsidebar"style="margin-top: 222px;">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a class="active" href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                             <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi Dropdown<span class="fa arrow"></span></a>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <!-- /.nav-second-level -->
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper" style="border:1px solid #ddd;">
+            <div class="row" style="margin-bottom: 30px;">
+                <div class="col-lg-12">
+                    <h2 class="page-header" style="border-bottom:none;margin-bottom:0px;margin-top:16px;font-size:20px;color:#999;">Popular Documents&nbsp;&nbsp; &nbsp;&nbsp;<i class="fa fa-arrow-circle-down fa-lg" style="color:#66bc31;text-shadow: 0 1px #444;font-size:20px;"></i></h2>
+                </div>
+
+<div class="col-lg-12" style="margin-bottom:20px;">
+<div class="col-md-13" style="padding-left:0px;border-top:1px solid #ddd;padding-top:5px;">
+    <small>
+      <div class="uppercase"style="text-transform: uppercase;">
+        <span><a class="popularcategory" title="Motors and Engines Manual" href="/tags/motors-engines" class="speclink">Engines</a></span> &nbsp;•&nbsp; 
+        <span><a class="popular" title="ATVs &amp; Utility Vehicles Manual" href="/tags/atvs" class="speclink">ATVs &amp; Utility Vehicles</a></span> &nbsp;•&nbsp; 
+        <span><a title="Chainsaws Manual" href="/tags/chainsaws" class="speclink">Chainsaws</a></span> &nbsp;•&nbsp;
+	<span><a title="Televisions Manual" href="/tags/televisions" class="speclink">Televisions</a></span> &nbsp;•&nbsp; 
+        <span><a title="Projectors Manual" href="/tags/projectors" class="speclink">Projectors</a></span> &nbsp;•&nbsp; 
+        <span><a title="Laptops Manual" href="/tags/laptops" class="speclink">Laptops</a></span> &nbsp;•&nbsp; 
+        <span><a title="Mobile Phones Manual" href="/tags/mobile-phones" class="speclink">Mobile Phones</a></span> &nbsp;•&nbsp; 
+        <span><a title="Camcorders Manual" href="/tags/camcorders" class="speclink">Camcorders</a></span> &nbsp;•&nbsp; 
+        <span><a title="Generators Manual" href="/tags/generators" class="speclink">Generators</a></span> &nbsp;•&nbsp; 
+        <span><a title="Lawnmowers Manual" href="/tags/lawnmowers" class="speclink">Lawnmowers</a></span> &nbsp;•&nbsp; 
+        <span><a title="Coffee Machines Manual" href="/tags/coffee-machines" class="speclink">Coffee Machines</a></span> &nbsp;•&nbsp; 
+        <span><a title="Microwaves Manual" href="/tags/microwaves" class="speclink">Microwaves</a></span> &nbsp;•&nbsp; 
+        <span><a title="Sewing Machines Manual" href="/tags/sewing-machines" class="speclink">Sewing Machines</a></span> &nbsp;•&nbsp; 
+        <span><a title="Dehumidifiers Manual" href="/tags/dehumidifiers" class="speclink">Dehumidifiers</a></span>
+    	<span><a title="Motorcycles &amp; Scooters Manual" href="/tags/motorcycles-scooters" class="speclink">Motorcycles &amp; Scooters</a></span> &nbsp;•&nbsp; 
+        <span><a title="Tractors &amp; Farm Machineries Manual" href="/tags/tractors-farm-machineries" class="speclink">Tractors &amp; Farm Machineries</a></span> &nbsp;•&nbsp; 
+        <span><a title="Diagnostics &amp; Health Monitors Manual" href="/tags/diagnostics-health-monitors" class="speclink">Diagnostics &amp; Health Monitors</a></span> &nbsp;•&nbsp; 
+        <span><a title="Water Heaters &amp; Boilers Manual" href="/tags/water-heaters-boilers" class="speclink">Water Heaters &amp; Boilers</a></span>
+      </div>
+    </small>
+  </div>
+<!--<font color="#d10303">Sponsored Links</font><br>
+<img width="728" height="90" border="0" galleryimg="no" alt="Advertisement" src="http://s1.2mdn.net/4196952/1-ID_EN_shoes_728X90.gif">-->
+</div>
+ <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+           
+
+
+            <div class="row">
+<!--=========looping mulai==========================================================================================================================-->
+<div class="col-lg-8">
+	<div class="panel panel-default" style="border:none;">
+		<div class="panel-body" style="border:1px solid #ddd;background:#fff;">
+<!--===============================================================================-->
+			<div class="col-lg-12" style="float:none;">
+				<h1 style="font-size:25px;color:#4cae4c;margin-top: 15px;margin-bottom: 0;">{{ tag|replace("-", " ")|title }}</h1>
+				<h4 style="font-size:16px;margin-top: 0;color:#999;" class="uppercase"><i class="fa fa-bookmark" style="color:#ff8000;"></i>
+					Download {{ tag|replace("-", " ")|title }} &amp; Share {{ tag|replace("-", " ")|title|truncate(20)|replace("...", "") }}</h4>
+				<div class="col-lg-3 col-md-9"style="float:right;" >
+				 	<button style="background:none;border:none;" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+		                		<img width="28" height="28"  class="resalignleft"> 
+					</button>
+	   			</div>
+				<div class="col-lg-9 col-md-11"style="margin-top: 10px;padding-left: 0;">
+					<p style=" padding-bottom: 0;margin-bottom:0px;">
+				            You are looking for {{ tag|replace("-", " ") }}, which is basically in one of our collection.
+				            We found {{ results_count }} document matched with your search keyword.
+				        </p>
+				        <p style="line-height:1.333em;padding-top:5px;">
+				            Documents Added :&nbsp; {{ data[0]['added']|humanize }}<br />
+				            Last Updated&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp; {{ data[0]['updated'] }}<br />
+				            DOC Filetype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp; Portable Document Format (PDF)<br />
+				            Suggested tags&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;
+				            {% for tag in tags %}
+				            <a href="/tags/{{ tag.term|slug }}">{{ tag.term }}</a>
+				            {% if not loop.last %},{% else %}.{% endif %}
+				            {% endfor %}
+				        </p>
+					<p style="float:left;margin-bottom: 0;">
+						<button class="btn btn-success btn-xs" type="button">Download
+						<i class="fa fa-arrow-circle-right fa-lg" style="color:#fff;"></i>
+						</button>
+						<button class="btn btn-warning btn-xs" type="button">Read Online
+						<i class="fa fa-arrow-circle-right fa-lg" style="color:#fff;"></i>
+						</button>
+					</p>
+					<!--<p class="noLink">
+				            <a class="btn btn-primary btn-large" id="aDownload" name="download" href="#download">Download</a>
+				        </p>-->
+					</div>
+
+					<div class="col-lg-12" style="background: #f9f9f9;padding: 0px;margin-left:0px;float:right;">
+					<p style="float:right;margin-bottom: 0;color:#ccc;">Download by Sponsored Ads&nbsp;<i class="fa fa-star"></i></p>
+					</div>				
+<div class="col-lg-12" style="background: #fff;padding: 0px;margin-left:0px;" >
+ 	<button style="width:100%;">
+		<p style="padding-top:3px">
+			<span class="pull-right">3617KB/s</span>
+				<i style="color: rgb(102, 188, 49); float: left; margin-top: 3px;" class="fa fa-cloud-download"></i>
+					<a style="color: #ff8000;float:left" title="Sponsored Download" href="/download/mirror1-moto-guzzi-le-mans-iii-user-manual.pdf" class="speclink" target="_blank" rel="nofollow">&nbsp; &nbsp;&nbsp; {{ tag|replace("-", " ")|title|safe|truncate(35) }} | Verified</a>
+		</p>
+	</button>
+
+	<button style="width:100%;">
+		<p style="padding-top:3px">
+			<span class="pull-right">3617KB/s</span>
+				<i style="color: rgb(102, 188, 49); float: left; margin-top: 3px;" class="fa fa-cloud-download"></i>
+					<a style="color: #ff8000;float:left" title="Sponsored Download" href="/download/mirror1-moto-guzzi-le-mans-iii-user-manual.pdf" class="speclink" target="_blank" rel="nofollow">&nbsp; &nbsp;&nbsp; [ DIRECT ] {{ tag|replace("-", " ")|title|safe|truncate(35) }}</a>
+		</p>
+	</button>
+
+	<button style="width:100%;">
+		<p style="padding-top:3px">
+		<span class="pull-right">3617KB/s</span>
+		<i style="color: rgb(102, 188, 49); float: left; margin-top: 3px;" class="fa fa-cloud-download"></i>
+			<a style="color: #ff8000;float:left" title="Sponsored Download" href="/download/mirror1-moto-guzzi-le-mans-iii-user-manual.pdf" class="speclink" target="_blank" rel="nofollow">&nbsp; &nbsp;&nbsp; {{ tag|replace("-", " ")|title|safe|truncate(33) }}[ FULL DOWNLOAD ]</a>
+		</p>
+	</button>
+
+       <p style="color:#66bc31;margin-bottom:20px;"><span class="pull-right">N/A</span>&nbsp;&nbsp;&nbsp;<i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;User Upload</p>
+</div>
+
+					<div class="clearfix"></div>
+				</div>
+			
+    <!--end row-->
+<!--===============================================================================-->
+<div class="row">
+<div class="col-lg-12">
+	<div class="col-lg-12" >
+		{% for d in data %}
+		<div class="panel panel-default" style="border:none;">
+			<div class="panel-body" style="border:1px solid #ddd;background:#fff;">
+				<div class="col-lg-12" style="float:none;">
+<!--titel-->
+		{% if "admin" in session %}
+                <input type="text" value="{{ d['title'] }}" class="inputTitle" style="width: 400px; height:30px;" />
+                {% else %}
+	        <a href="/read/{{ d['_id'] }}/{{ d['title']|slug }}">
+		<h2 style="font-size:25px;color:#4cae4c;margin-top: 10px;margin-bottom: 0;" class="h2Title" 
+			data-oid="{{ d['_id'] }}" data-title="{{ d['title']|truncate(50)|slug }}">{{ d['title']|truncate(50) }}</h2></a>
+		<h4 style="font-size:16px;margin-top: 0;color:#999;margin-bottom:0px;" class="uppercase"><i class="fa fa-bookmark" style="color:#ff8000;"></i>
+					Download {{ d['title']|truncate(50)|title }} &amp; Share {{ d['title']|truncate(50)|title|truncate(20)|replace("...", "") }}</h4>
+
+                {% endif %}
+<!--thum-->
+ 				<div class="col-lg-3 col-md-9"style="float:right;" >
+{% if d['thumb_updated'] %}
+                			<div style="float: left; padding-right: 15px;padding-bottom: 0px;padding-top: 0px;">
+                    	<img src="/thumb/{{ d['fpath'] }}" style="border: 1px solid #ddd; padding: 15px;margin-top:10px;" alt="{{ d['title'] }}" title="{{ d['title'] }}" />
+                			</div>
+                {% else %}
+                			<div style="float: left; padding-right: 15px;padding-bottom: 0px;padding-top: 0px;">
+                    	<img src="/static/images/pdf_icon.png" style="margin-top: 20px;border: 1px solid #ddd;" alt="{{ d['title'] }}" title="{{ d['title'] }}" />
+                    {# <img src="http://docs.google.com/viewer?url={{ d['url'] }}&a=bi&pagenumber=1&w=100" style="border: 1px solid #ddd; padding: 4px;" alt="{{ d['title'] }}" title="{{ d['title'] }}" /> #}
+                			</div>
+                {% endif %}
+				</div>	
+<!--snipet-->
+				<div style="margin-top: 10px;padding-left: 0;" class="col-lg-9 col-md-11">
+		<p style="line-height:1.333em;padding-top:5px;margin-bottom:0px;">{{ d['snippet'] }}</p>
+		<p style="line-height:1.333em;padding-top:5px;">
+                    Documents Added :&nbsp; {{ d['added']|humanize }}<br />
+                    {% if d['thumb_updated'] %}
+                    Last Updated&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp; {{ d['thumb_updated']|humanize }}<br />
+                    {% else %}
+                    Last Updated&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp; {{ d['updated'] }}<br />
+                    {% endif %}
+                    DOC Filetype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp; Portable Document Format (PDF)<br />
+                    Source: &nbsp;<a href="/view/{{ d['_id'] }}" rel="nofollow, noindex" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a><br />
+                    Report Abuse: <span class="glyphicon glyphicon-flash" aria-hidden="true" style="color: red;"></span><br />
+                    {% if session %}
+                    Add to your collection: <a href="/read/{{ d['_id'] }}/{{ d['title']|truncate(50)|slug }}"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: green; cursor: pointer;" data-oid="{{ d['_id'] }}"></span></a>
+                    {% endif %}
+                				</p>
+					</div>
+				</div>		
+			</div>
+		</div>{% endfor %}
+	</div>
+</div>
+</div>
+</div>
+</div></div>
+<!--=========looping selesai==========================================================================================================================-->
+
+<div class="col-lg-4">
+
+		<div style="margin-bottom: 10px;border:none;" class="panel panel-default">
+			<div style="padding:0px;" class="panel-body">
+<div class="text-left">
+<a style="background:#3b5998;color:#fff;" class="btn btn-social-icon btn-facebook btn-xs"><i class="fa fa-facebook fa-lg"></i></a>
+<a style="background:#dd4b39;color:#fff;"class="btn btn-social-icon btn-google-plus btn-xs"><i class="fa fa-google-plus fa-lg"></i></a>
+<a style="background:#517fa4;color:#fff;"class="btn btn-social-icon btn-instagram btn-xs"><i class="fa fa-instagram fa-lg"></i></a>
+<a style="background:#007bb6;color:#fff;"class="btn btn-social-icon btn-linkedin btn-xs"><i class="fa fa-linkedin fa-lg"></i></a>
+<a style="background:#cb2027;color:#fff;"class="btn btn-social-icon btn-pinterest btn-xs"><i class="fa fa-pinterest fa-lg"></i></a>
+<a style="background:#2ba9e1;color:#fff;"class="btn btn-social-icon btn-twitter btn-xs"><i class="fa fa-twitter fa-lg"></i></a>
+<a style="background:#5cb85c;color:#fff;"class="btn btn-social-icon btn-dropbox btn-xs"><i class="fa fa-dropbox fa-lg"></i></a>
+<a style="background:pink;color:#fff;"class="btn btn-social-icon btn-flickrx btn-xs"><i class="fa fa-flickr fa-lg"></i></a>
+			</div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+		    <h4 style="color:#4cae4c;margin-top:0px;">Popular Download</h4>
+                    <div class="panel panel-default">
+                        <div style="padding: 10px 15px;background:none repeat scroll 0 0%, -moz-linear-gradient(center top , #f4f4f4 0px, #d2d2d2 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);" class="panel-body">
+				<a><button style="width:100%;padding:5px 10px;margin: 5px 0;"><span class="pull-left">
+					<i class="fa fa-arrow-circle-right fa-lg" style="float:left;margin-top:4px;color:#ff8000;">
+					</i>&nbsp;&nbsp; {{ tag|replace("-", " ")|title|safe|truncate(33) }}[ FULL DOWNLOAD ]</span></button></a>
+				<a><button style="width:100%;padding:5px 10px;margin: 5px 0;"><span class="pull-left">
+					<i class="fa fa-arrow-circle-right fa-lg" style="float:left;margin-top:4px;color:#ff8000;">
+					</i>&nbsp;&nbsp; {{ tag|replace("-", " ")|title|safe|truncate(35) }} | VERIFIED</span></button></a>
+				<a><button style="width:100%;padding:5px 10px;margin: 5px 0;"><span class="pull-left">
+					<i class="fa fa-arrow-circle-right fa-lg" style="float:left;margin-top:4px;color:#ff8000;">
+					</i>&nbsp;&nbsp; [ DIRECT ] {{ tag|replace("-", " ")|title|safe|truncate(35) }}</span></button></a>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+ 
+			<h4 style="color:#4cae4c;margin-top:-10px;">Related Query</h4>
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="padding:20px 20px 10px;background:#fff;border:none;">
+				    {% for rel in related_data %}
+				    <i class="fa fa-arrow-circle-right" style="float:left;color:#ff8000;"></i><h6 style="margin-top:0px;margin-bottom:-10px;"><a style="color:#777;text-transform: capitalize;" href="/tags/{{ rel['term']|slug }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ rel['term']|truncate(60) }}</a></h6><br>
+		                    {% endfor %}
+					
+				
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+
+<!--=========looping mulai==========================================================================================================================-->
+
+
+</div>
+</div>
+
+<div class="row">
+<div style="margin-bottom:20px;float:left;" class="col-lg-12">
+<div>
+    <span><a title="Apple Users Manuals" href="/tags/apple"><img width="40" height="40" class="img-thumbnail" style="border:none;margin-top: -10px;" alt="Apple" 
+src="/static/images/apple.jpg"></a></span> 
+    <span><a title="Acer Users Manuals" href="/tags/Acer"><img width="66" height="40" class="img-thumbnail" style="border:none;" alt="Acer" 
+src="/static/images/acer.png"></a></span>
+    <span><a title="Compaq Users Manuals" href="/tags/compaq"><img  width="88" height="40" class="img-thumbnail" style="border:none;" alt="Compaq" 
+src="/static/images/compaq.png"></a></span>
+    <span><a title="Corsair Users Manuals" href="/tags/Corsair"><img width="110" height="40" class="img-thumbnail" style="border:none;" alt="Corsair" 
+src="/static/images/corsair.png"></a></span>
+    <span><a title="Intel Users Manuals" href="/tags/intel"><img width="66" height="25" class="img-thumbnail" style="border:none;" alt=Intel" 
+src="/static/images/intel.png"></a></span>
+    <span><a title="Samsung Users Manuals" href="/tags/samsung"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Samsung" 
+src="/static/images/samsung.gif"></a></span> 
+    <span><a title="Beko Users Manuals" href="/tags/beko"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Beko" 
+src="/static/images/beko.gif"></a></span> 
+    <span><a title="LG Users Manuals" href="/tags/lg"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="LG" 
+src="/static/images/lg.gif"></a></span> 
+    <span><a title="Indesit Users Manuals" href="/tags/indesit"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Indesit" 
+src="/static/images/indesit.jpg"></a></span> 
+    <span><a title="Bush Users Manuals" href="/tags/bush"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Bush" 
+src="/static/images/bush.gif"></a></span> 
+    <span><a title="Siemens Users Manuals" href="/tags/siemens"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Siemens" 
+src="/static/images/siemens.gif"></a></span> 
+    <span><a title="Candy Users Manuals" href="/tags/candy"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Candy" 
+src="/static/images/candy.gif"></a></span> 
+    <span><a title="Bosch Users Manuals" href="/tags/bosch"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Bosch" 
+src="/static/images/bosch.gif"></a></span> 
+    <span><a title="Belling Users Manuals" href="/tags/belling"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="Belling" 
+src="/static/images/belling.gif"></a></span> 
+    <span><a title="AEG Users Manuals" href="/tags/aeg"><img width="77" height="40" class="img-thumbnail" style="border:none;" alt="AEG" 
+src="/static/images/aeg.jpg"></a></span> 
+  </div>
+</div>
+
+<div class="col-lg-12">
+<h2 style="border-bottom:none;margin-bottom:0px;margin-top:16px;font-size:20px;color:#999;" class="page-header">Popular Documents&nbsp;&nbsp; &nbsp;&nbsp;<i style="color:#66bc31;text-shadow: 0 1px #444;font-size:20px;" class="fa fa-arrow-circle-down fa-lg"></i></h2>
+</div>
+
+<div style="margin-bottom:20px;" class="col-lg-12">
+<div style="padding-left:0px;border-top:1px solid #ddd;padding-top:5px;" class="col-md-13">
+    <small>
+     <span><a class="popularcategory" title="Motors and Engines Manual" href="/tags/motors-engines" class="speclink">Engines</a></span> &nbsp;•&nbsp; 
+        <span><a class="popular" title="ATVs &amp; Utility Vehicles Manual" href="/tags/atvs" class="speclink">ATVs &amp; Utility Vehicles</a></span> &nbsp;•&nbsp; 
+        <span><a title="Chainsaws Manual" href="/tags/chainsaws" class="speclink">Chainsaws</a></span> &nbsp;•&nbsp;
+	<span><a title="Televisions Manual" href="/tags/televisions" class="speclink">Televisions</a></span> &nbsp;•&nbsp; 
+        <span><a title="Projectors Manual" href="/tags/projectors" class="speclink">Projectors</a></span> &nbsp;•&nbsp; 
+        <span><a title="Laptops Manual" href="/tags/laptops" class="speclink">Laptops</a></span> &nbsp;•&nbsp; 
+        <span><a title="Mobile Phones Manual" href="/tags/mobile-phones" class="speclink">Mobile Phones</a></span> &nbsp;•&nbsp; 
+        <span><a title="Camcorders Manual" href="/tags/camcorders" class="speclink">Camcorders</a></span> &nbsp;•&nbsp; 
+        <span><a title="Generators Manual" href="/tags/generators" class="speclink">Generators</a></span> &nbsp;•&nbsp; 
+        <span><a title="Lawnmowers Manual" href="/tags/lawnmowers" class="speclink">Lawnmowers</a></span> &nbsp;•&nbsp; 
+        <span><a title="Coffee Machines Manual" href="/tags/coffee-machines" class="speclink">Coffee Machines</a></span> &nbsp;•&nbsp; 
+        <span><a title="Microwaves Manual" href="/tags/microwaves" class="speclink">Microwaves</a></span> &nbsp;•&nbsp; 
+        <span><a title="Sewing Machines Manual" href="/tags/sewing-machines" class="speclink">Sewing Machines</a></span> &nbsp;•&nbsp; 
+        <span><a title="Dehumidifiers Manual" href="/tags/dehumidifiers" class="speclink">Dehumidifiers</a></span> &nbsp;•&nbsp; 
+    	<span><a title="Motorcycles &amp; Scooters Manual" href="/tags/motorcycles-scooters" class="speclink">Motorcycles &amp; Scooters</a></span> &nbsp;•&nbsp; 
+        <span><a title="Tractors &amp; Farm Machineries Manual" href="/tags/tractors-farm-machineries" class="speclink">Tractors &amp; Farm Machineries</a></span> &nbsp;•&nbsp; 
+        <span><a title="Diagnostics &amp; Health Monitors Manual" href="/tags/diagnostics-health-monitors" class="speclink">Diagnostics &amp; Health Monitors</a></span> &nbsp;•&nbsp; 
+        <span><a title="Water Heaters &amp; Boilers Manual" href="/tags/water-heaters-boilers" class="speclink">Water Heaters &amp; Boilers</a></span>
+      </div>
+    </small>
+  </div>
+<!--<font color="#d10303">Sponsored Links</font><br>
+<img width="728" height="90" border="0" galleryimg="no" alt="Advertisement" src="http://s1.2mdn.net/4196952/1-ID_EN_shoes_728X90.gif">-->
+		</div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+<div style="margin-bottom: 0;height:5px;background:none repeat scroll 0 0%, -moz-linear-gradient(center top , #66bc31 0px, #4b8424 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);">
+</div>
+<div class="row" style="margin-bottom: 0px; padding: 25px 0;background:none repeat scroll 0 0%, -moz-linear-gradient(center top , #515155 0px, #3c3c3e 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);border-bottom: 1px solid #aaa;">
+	<div class="col-lg-10" style="float:right;">
+		<div class="col-lg-9">
+			<p class="pfooter">
+				© Macro Data Inc. All rights reserved. Privacy Policy | Ad Choice | Terms of Use | Mobile User Agreement |</p><br>
+			<p style="color:#fff;border-top: 1px solid #666d76; box-shadow: 0 -1px #222;margin-top: -20px;;margin-bottom:0px;"></p>
+			<div class="col-lg-3">
+				<p style="padding-top: 40px;height:150px;border-right: 1px solid #222; box-shadow: 1px 0 #666d76;">
+				<span style="font-family: 'Oswald', sans-serif;letter-spacing:-1px;color:#fff;font-size:40px;letter-spacing:-2px;
+				text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);"><b>
+				<font color="#66bc31">MACRO</font></b>data</span>
+			</div>
+			<div class="col-lg-3">
+				<p style="padding-top: 10px;border-right: 1px solid #222; box-shadow: 1px 0 #666d76;">
+					<span class="pfooter" style="color:#fff;"><b>MacroData</b></span><br>
+					<a class="pfooter" href="/">Home</a><br>
+                    			<a class="pfooter" href="/">Register</a><br>
+                    			<a class="pfooter" href="/">Login</a><br>
+					<a class="pfooter" href="/">Contact</a><br>
+					<a class="pfooter" href="/">About</a><br>
+					<a class="pfooter" href="/">Disclaimer</a><br>
+				</p>
+			</div>
+			<div class="col-lg-3">
+				<p style="padding-top: 10px;">
+					<span class="pfooter" style="color:#fff;"><b>Follow Us</b></span><br>
+                    			<a class="pfooter" href="/"><i class="fa fa-facebook fa-lg"></i>&nbsp;&nbsp;&nbsp;Facebook</a><br>
+                    			<a class="pfooter" href="/"><i class="fa fa-google-plus fa-lg"></i>&nbsp;Googleplus</a><br>
+					<a class="pfooter" href="/"><i class="fa fa-twitter fa-lg"></i>&nbsp;Twitter</a><br>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="js/plugins/morris/raphael.min.js"></script>
+    <script src="js/plugins/morris/morris.min.js"></script>
+    <script src="js/plugins/morris/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/sb-admin-2.js"></script>
+
+</body>
+
+</html>

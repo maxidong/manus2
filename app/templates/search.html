@@ -1,0 +1,164 @@
+    {% extends "base.html" %}
+
+{% block title %}{{ keyword|replace("-", " ")|title }}{% endblock %}
+
+    {% block content %}
+	<div class="row-fluid">
+		<div class="row-fluid">
+
+			<div class="hero-unit">
+	    		<div class="span5 banner"></div>
+
+				<div class="span7">
+					<h1 style="font-size: 18px;">{{ keyword|replace("-", " ")|title }}</h1>
+						<p style="font-size: 12px;">
+                            You are looking for {{ keyword }}, which is basically in one of our collection.
+                            We found {{ results_count }} document match with your search keyword.
+                        </p>
+                        <p style="font-size: 11px;">
+                            Added: {{ data[0]['added']|humanize }}<br />
+                            Updated: {{ data[0]['updated'] }}<br />
+                            Filetype: Portable Document Format (PDF)
+                        </p>
+		           		<p class="noLink"><a class="btn btn-primary btn-large">
+						Download »</a></p>
+				</div>
+
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+    </div>
+    <!--end row-->
+
+	<!--start row-->
+    <div class="row-fluid">
+		<div class="hero-unit smallerTopPadding" style="border-left: 5px solid #f0ad4e;">
+	        <h3 style="font-size: 11px; margin: 0;">Sponsored Downloads</h3>
+            <div class="span7" style="margin-left: 0;">
+                <span class="glyphicon glyphicon-download" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/download/{{ keyword }}">{{ keyword|replace("-", " ")|title|truncate(60) }} PDF</a></button><br />
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/download/{{ keyword }}">{{ keyword|replace("-", " ")|title|truncate(60) }} [FULL]</a></button><br />
+                <span class="glyphicon glyphicon-cloud" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/download/{{ keyword }}">{{ keyword|replace("-", " ")|truncate(60)|replace(" ", "-") }}.pdf</a></button>
+            </div>
+            <div class="span2" style="margin-left: 0;">
+                <span style="font-size: 14px; display: block; margin-bottom: 10px; text-align: right;">3128 Kb/s</span>
+                <span style="font-size: 14px; display: block; margin-bottom: 10px; text-align: right;">2087 Kb/s</span>
+                <span style="font-size: 14px; display: block; text-align: right;">678 Kb/s</span>
+            </div>
+		</div>
+    </div>
+    <!--end row-->
+
+	<!--start row-->
+	<div class="row-fluid">
+
+		<div class="span8">
+            {% for d in data[1:] %}
+			<div class="hero-unit smallerTopPadding">
+                {% if d['thumb_updated'] %}
+                <div style="float: left; padding-right: 15px;padding-bottom: 80px;padding-top: 24px;">
+                    <img src="/thumb/{{ d['fpath'] }}" style="border: 1px solid #ddd; padding: 4px;" alt="{{ d['title'] }}" title="{{ d['title'] }}" />
+                </div>
+                {% else %}
+                <div style="float: left; padding-right: 15px;padding-bottom: 80px;padding-top: 24px;">
+                    <img src="/static/images/pdf_icon.png" style="border: 1px solid #ddd; padding: 20px 4px 20px 4px;" alt="{{ d['title'] }}" title="{{ d['title'] }}" />
+                </div>
+                {% endif %}
+                {% if "admin" in session %}
+                <input type="text" value="{{ d['title'] }}" class="inputTitle" style="width: 400px; height:30px;" />
+                {% else %}
+	            <h2 style="font-size: 16px; cursor: pointer;" class="h2Title" data-oid="{{ d['_id'] }}" data-title="{{ d['title']|truncate(50)|slug }}">{{ d['title']|truncate(50) }}</h2>
+                {% endif %}
+	            <p style="font-size: 12px; padding-bottom: 0;">{{ d['snippet'] }}</p>
+                <p style="font-size: 11px;">
+                    Added: {{ d['added']|humanize }}<br />
+                    {% if d['thumb_updated'] %}
+                    Updated: {{ d['thumb_updated']|humanize }}<br />
+                    {% else %}
+                    Updated: {{ d['updated'] }}<br />
+                    {% endif %}
+                    Filetype: Portable Document Format (PDF)<br />
+                    Source: &nbsp;<a href="/view/{{ d['_id'] }}" rel="nofollow, noindex" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a><br />
+                    Report Abuse: <span class="glyphicon glyphicon-flash" aria-hidden="true" style="color: red;"></span><br />
+                    {% if session %}
+                    Add to your collection: <span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: green;" data-oid="{{ d['_id'] }}"></span>
+                    {% endif %}
+                </p>
+                {% if "admin" in session %}
+                <button type="submit" class="buttonUpdate" data-oid="{{ d['_id'] }}">Update</button>
+                <a href="/read/{{ d['_id'] }}/{{ d['title']|slug }}" target="_blank" style="font-size: 13px;">Read this file</a>
+                <a href="http://docs.google.com/viewer?url={{ d['url'] }}&a=bi&pagenumber=1&w=" target="_blank" style="font-size: 13px;">View Larger Thumb</a>
+                {% endif %}
+			</div>
+            {% endfor %}
+    	</div><!--/span-->
+
+		<div class="span4">
+          	<div class="hero-unit smallerTopPadding">
+           		<h3>Sponsored Ads</h3>
+           		<p>Donec id elit non mi porta gravida at eget metus. Fusce
+				dapibus, tellus ac cursus commodo, tortor mauris condimentum
+				nibh, ut fermentum..  </p>
+			</div>
+            <div class="hero-unit smallerTopPadding">
+           		<h3>Related Query</h3>
+           		<ol>
+                    {% for rel in related_data %}
+                    <li style="font-size: 11px;">{{ rel['term'] }}</li>
+                    {% endfor %}
+                </ol>
+			</div>
+		</div><!--/span-->
+	</div>
+	<!-- end row-->
+    {% endblock %}
+
+{% block js %}
+{% if "admin" in session %}
+<script>
+    $(document).ready(function() {
+        $(".buttonUpdate").click(function() {
+            var oid = $(this).attr("data-oid");
+            var title = $(this).parent().find("input").val();
+            // alert(oid + " " + title);
+            if (oid === "" || title === "") {
+                alert("can't input empty data!");
+            } else {
+                $.ajax({
+                    url: "/admin/update-on-the-fly",
+                    type: "POST",
+                    data: {"oid": oid, "title": title},
+                    success: function(response) {
+                        console.log(response);
+                    }
+                })
+            }
+            return false;
+        })
+    })
+</script>
+{% endif %}
+<script>
+    $(document).ready(function() {
+        $(".glyphicon-plus").click(function() {
+            var oid = $(this).attr("data-oid");
+            $.ajax({
+                url: "/users-add-collection",
+                type: "POST",
+                data: {"oid": oid},
+                success: function(response) {
+                    console.log(response);
+                }
+            })
+            return false;
+        })
+        $(".h2Title").click(function() {
+            var oid = $(this).attr("data-oid");
+            var title = $(this).attr("data-title");
+            window.open("/read/" + oid + "/" + title);
+            // alert("/read/" + oid + "/" + title);
+            return false;
+        })
+    })
+</script>
+{% endblock %}
